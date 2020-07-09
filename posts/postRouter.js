@@ -4,16 +4,6 @@ const PostDb = require("./postDb.js")
 
 const router = express.Router();
 
-// router.post("/", (req, res) => {
-//   PostDb.insert(req.body)
-//     .then(post => {
-//       res.status(200).json(post)
-//     })
-//     .catch(error => {
-//       console.log(error)
-//       res.status(500).json({ message:" there is error posting post"})
-//     })
-// })
 
 router.get('/', (req, res) => {
   // do your magic!
@@ -66,7 +56,7 @@ router.put('/:id', (req, res) => {
 
   PostDb.update(id, changes)
     .then(count => {
-      if(count) {
+      if(count > 0) {
         res.status(200).json(count)
       } else {
         res.status(404).json({ message: "the post could not be found"})
