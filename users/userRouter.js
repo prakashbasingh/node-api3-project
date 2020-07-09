@@ -5,6 +5,8 @@ const { json } = require('express');
 
 const router = express.Router();
 
+//*********** POST ************\\
+
 router.post('/',validateUser, (req, res) => {
   // do your magic!
   UserDb.insert(req.body)
@@ -17,7 +19,7 @@ router.post('/',validateUser, (req, res) => {
     })
 });
 
-router.post('/:id/posts', validateUserId, (req, res) => {
+router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
   // do your magic!
     const postsById = {...req.body, user_id: req.params.id}
 
@@ -29,6 +31,8 @@ router.post('/:id/posts', validateUserId, (req, res) => {
         res.status(500).json({ message: "error posting post for the user"})
       })
 });
+
+//*********** GET ************\\
 
 router.get('/', (req, res) => {
   // do your magic!
@@ -62,7 +66,7 @@ router.get('/:id',validateUserId, (req, res) => {
     })
 });
 
-router.get('/:id/posts',validateUserId, validatePost, (req, res) => {
+router.get('/:id/posts',validateUserId, (req, res) => {
   // do your magic!
   UserDb.getUserPosts(req.params.id)
     .then(posts => {
@@ -73,6 +77,8 @@ router.get('/:id/posts',validateUserId, validatePost, (req, res) => {
       res.status(500).json({ message: "error retrieving users post"})
     })
 });
+
+//*********** DELETE ************\\
 
 router.delete('/:id', validateUserId, (req, res) => {
   // do your magic!
@@ -89,6 +95,8 @@ router.delete('/:id', validateUserId, (req, res) => {
       res.status(500).json({message: "there is error deleting user"}) 
     })
 });
+
+//*********** PUT ************\\
 
 router.put('/:id', validateUserId, (req, res) => {
   // do your magic!
@@ -109,7 +117,8 @@ router.put('/:id', validateUserId, (req, res) => {
     })
 });
 
-//custom middleware
+
+//*********** custom middleware ************\\
 
 function validateUserId(req, res, next) {
   // do your magic!
