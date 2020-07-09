@@ -59,23 +59,23 @@ router.delete('/:id', (req, res) => {
     })
 });
 
-router.put('/:id',validatePostId, (req, res) => {
+router.put('/:id', (req, res) => {
   // do your magic!
   const { id } = req.params;
   const changes = req.body;
 
   PostDb.update(id, changes)
-  .then(count => {
-    if(count > 0){
-      res.status(200).json(count, "the post has been edited and updated")
-    }else{
-      res.status(404).json({ message: "the post could not be found"})
-    }
-  })
-  .catch(error => {
-    console.log(error)
-    res.status(500).json({ message: "There is error updating post"})
-  });
+    .then(count => {
+      if(count) {
+        res.status(200).json(count)
+      } else {
+        res.status(404).json({ message: "the post could not be found"})
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(500).json({ message: "There is error updating post"})
+    });
 });
 
 // custom middleware

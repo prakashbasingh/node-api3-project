@@ -4,6 +4,7 @@ const postsRouter = require("./posts/postRouter.js")
 const usersRouter = require("./users/userRouter.js")
 
 const server = express();
+server.use(express.json())
 
 server.use("/api/posts", postsRouter);
 server.use("/api/users", usersRouter);
